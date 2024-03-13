@@ -25,11 +25,6 @@ function LevelMaker.generate(width, height)
     -- Match the colors for locks and keys
     local keyFrame = math.random(1, 4)
     local lockFrame = keyFrame + 4
-    --setting the start mode key and lock
-    local hasKey = false
-    local hasLock = false
-
-    local requiresKey = false
 
     -- Define the pillars table
     local pillars = {}
@@ -242,9 +237,30 @@ function LevelMaker.generate(width, height)
         end
     end
 
-   
+    -- Add the key to the objects table
+    local keyObject = GameObject {
+        texture = 'keys_locks',
+        x = (keyX - 1) * TILE_SIZE,
+        y = (keyY - 1) * TILE_SIZE,
+        width = 16,
+        height = 16,
+        frame = keyFrame,
+        collidable = true,
+        consumable = true,
+        solid = false,
+        requiresKey = false,  -- set requiresKey to false for keys
+        onConsume = function(player, object)
+            gSounds['pickup']:play()
+            player.hasKey = true
+            lockObject.consumable = true
+        end
+    }
+    -- Add the key object to the objects table
+    table.insert(objects, keyObject)
+      
+
     -- Define lockObject with an empty onConsume function
-    local lockObject = GameObject {
+    lockObject = GameObject {
         texture = 'keys_locks',
         x = (lockX - 1) * TILE_SIZE,
         y = (lockY - 1) * TILE_SIZE,
@@ -252,38 +268,21 @@ function LevelMaker.generate(width, height)
         height = 16,
         frame = lockFrame,
         collidable = true,
-        consumable = true,
+        consumable = false,
         solid = false,
-        requiresKey = true,
+        requiresKey = true, 
         onConsume = function(player, object)
+            if player.hasKey then
+                gSounds['pickup']:play()
+                player.hasLock = true
+                player.hasKey = false
+            end
         end
     }
 
     -- Add the lock object to the objects table
     table.insert(objects, lockObject)
 
-    -- Add the key to the objects table
-    table.insert(objects,
-        GameObject {
-            texture = 'keys_locks',
-            x = (keyX - 1) * TILE_SIZE,
-            y = (keyY - 1) * TILE_SIZE,
-            width = 16,
-            height = 16,
-            frame = keyFrame,
-            collidable = true,
-            consumable = true,
-            solid = false,
-            requiresKey = false,
-            onConsume = function(player, object)
-                gSounds['pickup']:play()  
-                hasKey = true              
-            end
-        }
-    )    
-     
- 
-    
     -- Setting the new player starting coordinates
     local playerStartX, playerStartY = 0, 0
     --[[ Finding a suitable starting position for the player on solid ground
