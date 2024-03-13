@@ -74,11 +74,14 @@ gTextures = {
     ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
     ['green-alien'] = love.graphics.newImage('graphics/green_alien.png'),
     ['creatures'] = love.graphics.newImage('graphics/creatures.png'),
-    ['keys_locks'] = love.graphics.newImage('graphics/keys_and_locks.png')
+    ['keys_locks'] = love.graphics.newImage('graphics/keys_and_locks.png'), 
+    ['poles'] = love.graphics.newImage('graphics/flags.png'),
+    ['flags'] = love.graphics.newImage('graphics/flags.png')
+
  }
 
 gFrames = {
-    ['tiles'] = GenerateQuads(gTextures['tiles'], TILE_SIZE, TILE_SIZE),
+    ['tiles'] = GenerateQuads(gTextures['tiles'], TILE_SIZE, TILE_SIZE, 0, 0),
     ['toppers'] = GenerateQuads(gTextures['toppers'], TILE_SIZE, TILE_SIZE),
     ['bushes'] = GenerateQuads(gTextures['bushes'], 16, 16),
     ['jump-blocks'] = GenerateQuads(gTextures['jump-blocks'], 16, 16),
@@ -86,7 +89,10 @@ gFrames = {
     ['backgrounds'] = GenerateQuads(gTextures['backgrounds'], 256, 128),
     ['green-alien'] = GenerateQuads(gTextures['green-alien'], 16, 20),
     ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16), 
-    ['keys_locks'] = GenerateQuads(gTextures['keys_locks'], 16, 16)
+    ['keys_locks'] = GenerateQuads(gTextures['keys_locks'], 16, 16), 
+    ['poles'] = GenerateQuads(gTextures['poles'], 16, 48), 
+    ['flags'] = GenerateQuads(gTextures['flags'], 16, 16)
+
 }
 
 -- these need to be added after gFrames is initialized because they refer to gFrames from within
