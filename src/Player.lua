@@ -12,7 +12,7 @@ Player = Class{__includes = Entity}
 
 function Player:init(def)
     Entity.init(self, def)
-    self.score = 0
+
 end
 
 function Player:update(dt)
@@ -75,16 +75,11 @@ function Player:checkObjectCollisions()
             if object.solid then
                 table.insert(collidedObjects, object)
             elseif object.consumable then
-                if object.requiresKey and not self.hasKey then
-                    -- Do nothing, the object requires a key and the player doesn't have one
-                else
-                    object.onConsume(self)
-                    table.remove(self.level.objects, k)
-                end
+                object.onConsume(self)
+                table.remove(self.level.objects, k)
             end
         end
     end
-
 
     return collidedObjects
 end

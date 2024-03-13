@@ -34,6 +34,7 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     return spritesheet
 end
 
+
 --[[
     Divides quads we've generated via slicing our tile sheet into separate tile sets.
 ]]
